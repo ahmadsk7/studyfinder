@@ -1,9 +1,8 @@
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../config/firebase';
 import { StudySpot } from '../types';
 
-const studySpots: Omit<StudySpot, 'id'>[] = [
+export const studySpots: StudySpot[] = [
   {
+    id: "1",
     name: "LSA Building",
     location: "LSA",
     noiseLevel: "pretty loud",
@@ -11,6 +10,7 @@ const studySpots: Omit<StudySpot, 'id'>[] = [
     tags: ["social", "sunlight"]
   },
   {
+    id: "2",
     name: "Third Floor UGLi (Loud Side)",
     location: "UGLi - 3rd Floor",
     noiseLevel: "pretty loud",
@@ -18,6 +18,7 @@ const studySpots: Omit<StudySpot, 'id'>[] = [
     tags: ["group", "dim"]
   },
   {
+    id: "3",
     name: "Third Floor UGLi (Quiet Side)",
     location: "UGLi - 3rd Floor",
     noiseLevel: "pretty quiet",
@@ -25,6 +26,7 @@ const studySpots: Omit<StudySpot, 'id'>[] = [
     tags: ["quiet", "dim"]
   },
   {
+    id: "4",
     name: "Union Quiet Room",
     location: "Michigan Union",
     noiseLevel: "extremely quiet",
@@ -32,6 +34,7 @@ const studySpots: Omit<StudySpot, 'id'>[] = [
     tags: ["silent", "focused"]
   },
   {
+    id: "5",
     name: "Union IdeaHub",
     location: "Michigan Union",
     noiseLevel: "pretty loud",
@@ -39,6 +42,7 @@ const studySpots: Omit<StudySpot, 'id'>[] = [
     tags: ["collaborative", "creative"]
   },
   {
+    id: "6",
     name: "Law Library",
     location: "Law Quad",
     noiseLevel: "silent",
@@ -46,6 +50,7 @@ const studySpots: Omit<StudySpot, 'id'>[] = [
     tags: ["deep work", "sunlight", "silent"]
   },
   {
+    id: "7",
     name: "North Campus Duderstadt Center",
     location: "Duderstadt Center",
     noiseLevel: "mixed",
@@ -53,6 +58,7 @@ const studySpots: Omit<StudySpot, 'id'>[] = [
     tags: ["flexible", "spacious"]
   },
   {
+    id: "8",
     name: "Ross Winter Garden",
     location: "Ross School of Business",
     noiseLevel: "pretty loud",
@@ -60,6 +66,7 @@ const studySpots: Omit<StudySpot, 'id'>[] = [
     tags: ["social", "modern", "sunlight"]
   },
   {
+    id: "9",
     name: "Taubman College Lobby",
     location: "Taubman College",
     noiseLevel: "low",
@@ -67,24 +74,11 @@ const studySpots: Omit<StudySpot, 'id'>[] = [
     tags: ["design vibe", "cozy"]
   },
   {
+    id: "10",
     name: "Museums Study Room",
     location: "UM Museum",
     noiseLevel: "quiet",
     lighting: "low natural light",
     tags: ["quiet", "minimalist"]
   }
-];
-
-export const seedDatabase = async () => {
-  try {
-    const spotsCollection = collection(db, 'spots');
-    
-    for (const spot of studySpots) {
-      await addDoc(spotsCollection, spot);
-    }
-    
-    console.log('Database seeded successfully!');
-  } catch (error) {
-    console.error('Error seeding database:', error);
-  }
-}; 
+]; 

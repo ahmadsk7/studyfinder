@@ -5,15 +5,14 @@ A web application that helps students find the perfect study spot on campus base
 ## Features
 
 - 🎯 Choose your focus goal (solo deep work, creative thinking, etc.)
-- 🤖 AI-powered spot recommendations
+- 🤖 Smart spot recommendations based on your needs
 - 📊 Detailed spot information (noise level, lighting, tags)
 - 🧭 Interactive map view (coming soon)
 
 ## Tech Stack
 
 - Frontend: React + TypeScript
-- Backend: Firebase Firestore
-- AI: OpenAI GPT-4
+- State Management: Local data structures
 - Styling: TailwindCSS
 
 ## Setup
@@ -25,27 +24,10 @@ A web application that helps students find the perfect study spot on campus base
    npm install
    ```
 
-3. Create a `.env` file based on `.env.example` and fill in your Firebase and OpenAI credentials:
-
-   ```bash
-   cp .env.example .env
-   ```
-
-4. Start the development server:
+3. Start the development server:
    ```bash
    npm run dev
    ```
-
-## Firebase Setup
-
-1. Create a new Firebase project
-2. Enable Firestore Database
-3. Add your Firebase configuration to `.env`
-
-## OpenAI Setup
-
-1. Get an API key from OpenAI
-2. Add your API key to `.env`
 
 ## Development
 

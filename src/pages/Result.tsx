@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { StudySpot, GPTResponse } from '../types';
-import { db } from '../config/firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { studySpots } from '../data/studySpots';
 
 export default function Result() {
   const [searchParams] = useSearchParams();
@@ -12,32 +11,46 @@ export default function Result() {
   const goal = searchParams.get('goal');
 
   useEffect(() => {
-    const fetchRecommendation = async () => {
+    const getRecommendation = async () => {
       try {
-        // Fetch all spots from Firestore
-        const spotsSnapshot = await getDocs(collection(db, 'spots'));
-        const spots = spotsSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        })) as StudySpot[];
+        // Simple recommendation logic based on focus goal
+        let recommendedSpot: StudySpot;
+        
+        switch (goal) {
+          case 'solo_deep_work':
+            recommendedSpot = studySpots.find(spot => 
+              spot.tags.includes('silent') || spot.noiseLevel === 'silent'
+            ) || studySpots[0];
+            break;
+          case 'creative_thinking':
+            recommendedSpot = studySpots.find(spot => 
+              spot.tags.includes('creative') || spot.lighting.includes('natural')
+            ) || studySpots[0];
+            break;
+          case 'group_collaboration':
+            recommendedSpot = studySpots.find(spot => 
+              spot.tags.includes('group') || spot.noiseLevel.includes('loud')
+            ) || studySpots[0];
+            break;
+          default:
+            recommendedSpot = studySpots[0];
+        }
 
-        // TODO: Implement GPT API call here
-        // For now, we'll just return the first spot as a placeholder
-        const mockResponse: GPTResponse = {
-          recommendedSpot: spots[0],
-          explanation: "This spot is perfect for your needs because..."
-        };
+        const explanation = `This spot is perfect for ${goal?.replace('_', ' ')} because it has ${recommendedSpot.noiseLevel} noise level and ${recommendedSpot.lighting}.`;
 
-        setResult(mockResponse);
+        setResult({
+          recommendedSpot,
+          explanation
+        });
       } catch (error) {
-        console.error('Error fetching recommendation:', error);
+        console.error('Error getting recommendation:', error);
       } finally {
         setLoading(false);
       }
     };
 
     if (goal) {
-      fetchRecommendation();
+      getRecommendation();
     } else {
       navigate('/');
     }
